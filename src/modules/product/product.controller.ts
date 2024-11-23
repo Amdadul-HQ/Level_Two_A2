@@ -87,7 +87,6 @@ const deleteProduct = async (req:Request,res:Response,next:NextFunction) =>{
   catch(error){
     next(error)
   }
-
 }
 
 export const ProductController = {
