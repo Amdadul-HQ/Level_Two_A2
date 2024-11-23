@@ -1,4 +1,3 @@
-import { Schema, model, connect } from 'mongoose';
 
 export interface IProduct {
     name:string,
@@ -7,5 +6,5 @@ export interface IProduct {
     type:"Mountain" | "Road" | "Hybrid" | "BMX" | "Electric",
     description:string,
     quantity:number,
-    inStock:true
+    inStock:boolean
 }
