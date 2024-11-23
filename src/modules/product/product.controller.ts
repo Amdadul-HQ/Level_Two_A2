@@ -3,7 +3,7 @@ import { ProductServices } from './product.service';
 import { productZodSchema } from './product.validation';
 
 // Create a Product
-const createProduct = async (req:Request,res:Response) =>{
+const createProduct = async (req:Request,res:Response,next:NextFunction) =>{
     try{
       const product = req.body;
       const zodValidateData = productZodSchema.parse(product);
@@ -16,11 +16,7 @@ const createProduct = async (req:Request,res:Response) =>{
       });
     }
     catch(error :unknown){
-        res.status(500).json({
-          success: false,
-          message: 'Something want worng',
-          data: error,
-        });
+        next(error)
     }
 }
 
