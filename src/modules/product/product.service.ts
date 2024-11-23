@@ -29,8 +29,14 @@ const getSingleProductFromDB = async(id:string) =>{
 
 // Update Single Product
 const updateProductIntoDB = async(id:string,data:IProduct)=>{
-    const result = await Product.findByIdAndUpdate(id,data,{new:true});
-    return result;
+
+  const isProductExist = await Product.findById(id);
+  if (!isProductExist) {
+    return false;
+  }
+
+  const result = await Product.findByIdAndUpdate(id, data, { new: true });
+  return result;
 }
 
 // Delete Singel Product

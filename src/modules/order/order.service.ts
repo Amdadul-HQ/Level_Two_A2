@@ -6,7 +6,24 @@ const orderCreateIntoDB = async (product: IOrder) => {
   return result;
 };
 
+// get revenue
+
+const getRevenueFromDB = async () =>{
+    const result = await Order.aggregate([
+      {
+        $group: {
+          _id: null, // Group all documents
+          totalRevenue: { $sum: '$totalPrice' }, // Sum all `totalPrice`
+        },
+      },
+    ]);
+    const totalRevenue = result[0]?.totalRevenue || 0 ;
+    return totalRevenue
+    
+}
+
 
 export const OrderServices = {
-    orderCreateIntoDB
+    orderCreateIntoDB,
+    getRevenueFromDB
 }
