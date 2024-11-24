@@ -1,10 +1,11 @@
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import { orderSchema } from './order.validation';
 import { OrderServices } from './order.service';
 import { Product } from '../product/product.model';
 import { IProduct } from '../product/product.interface';
+import { ProductServices } from '../product/product.service';
 
-const createOrder = async (req: Request, res: Response,next:NextFunction) => {
+const createOrder = async (req: Request, res: Response) => {
   try {
     const order = req.body;
     
@@ -13,11 +14,17 @@ const createOrder = async (req: Request, res: Response,next:NextFunction) => {
     const productData : IProduct | null = await Product.findById(product);
     
     if(!productData){
-        throw new Error("Product Not Found")
+      return res.send({
+        message: 'Product Not Founded',
+        status: false,
+      });
     }
     
     if(productData.quantity < quantity){
-        throw new Error("Insufficient Stock")
+      return res.send({
+        message: 'Insufficient Stock',
+        status: false,
+      });
     }
 
     productData.quantity -= quantity;
@@ -31,7 +38,9 @@ const createOrder = async (req: Request, res: Response,next:NextFunction) => {
     const zodValidateData = orderSchema.parse({...order,totalPrice});
 
     const result = await OrderServices.orderCreateIntoDB(zodValidateData);
-    await Product.findByIdAndUpdate(product,{...productData})
+
+    await ProductServices.updateProductIntoDB(product,{...productData})
+    // await Product.findByIdAndUpdate(product,{...productData})
 
     res.status(201).json({
       message: "Order created successfully",
@@ -39,13 +48,17 @@ const createOrder = async (req: Request, res: Response,next:NextFunction) => {
       data: result,
     });
   } catch (error: unknown) {
-   next(error)
+   res.status(401).send({
+     message: 'something went worng',
+     success: false,
+     data: error,
+   });
   }
 };
 
 // Get Total Revenue;
 
-const getRevenue = async(req:Request,res:Response,next:NextFunction) =>{
+const getRevenue = async(req:Request,res:Response) =>{
     try{
         const totalRevenue = await OrderServices.getRevenueFromDB()
         res.status(200).json({
@@ -57,7 +70,11 @@ const getRevenue = async(req:Request,res:Response,next:NextFunction) =>{
         });
     }
     catch(error:unknown){
-        next(error)
+        res.status(401).send({
+          message:'something went worng',
+          success :false,
+          data:error
+        })
     }
 }
 

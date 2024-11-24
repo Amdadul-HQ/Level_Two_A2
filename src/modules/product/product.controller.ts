@@ -49,6 +49,13 @@ const getSingleProduct = async(req:Request,res:Response) => {
   try{
     const {productId} = req.params;
     const result = await ProductServices.getSingleProductFromDB(productId);
+
+    if(!result){
+      res.send({
+        message:"Bicycle Not Founded",
+        status:false,
+      })
+    }
      res.status(200).json({
        message: 'Bicycles retrieved successfully',
        status: true,

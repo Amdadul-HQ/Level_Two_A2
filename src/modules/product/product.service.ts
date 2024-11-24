@@ -24,7 +24,10 @@ const getAllProductFromDB = async (searchTerm : string) => {
 // Get Single Product
 const getSingleProductFromDB = async(id:string) =>{
     const result = await Product.findById(id);
-    return result;
+    if(result){
+      return true
+    }
+    return false;
 }
 
 // Update Single Product
