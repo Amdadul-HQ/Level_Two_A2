@@ -147,21 +147,44 @@ An Express application built with TypeScript and MongoDB using Mongoose to manag
 
 ### Installation
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/bicycle-store-api.git
 
-Install dependencies:
-bash
+Prerequisites
+Before setting up the project locally, make sure you have the following installed:
+
+Node.js (v18 or higher) - Download Node.js
+MongoDB - Either set up MongoDB locally or use a cloud solution like MongoDB Atlas.
+
+Step 1: Clone the repository
+Clone the repository to your local machine. Using SSH:
+
+git clone git@github.com:Amdadul-HQ/Level_Two_A2.git
+cd Level_Two_A2
+
+Normal:
+
+git clone https://github.com/Amdadul-HQ/Level_Two_A2.git
+cd Level_Two_A2
+
+Step 2: Install Dependencies
+Run the following command to install all necessary dependencies:
+
 npm install
-Create a .env file:
+Step 3: Set up Environment Variables
+Create a .env file in the root of the project to configure the environment variables.
+
+Example .env file:
 
 PORT=5000
-MONGO_URI=your_mongodb_connection_string
+DATABASE_URL=mongodb://localhost:27017/
+NODE_ENV = development
 
-Start the server:
-bash
-npm run dev
+Make sure to replace the DATABASE_URL with your MongoDB URI if you're using MongoDB Atlas or a different database.
+
+Step 4: Run the Application Locally
+Once the dependencies are installed and the environment variables are set up, you can run the project:
+
+npm run start:dev
+
 
 
 🧪 Testing the API
@@ -170,11 +193,11 @@ Alternatively, integrate the project with Swagger for API documentation.
 
 📹 Video Explanation
 Watch Video Explanation
-(Provide the link to your video explanation here)
+(Provide the link to your video explanation here)[https://www.loom.com/share/bdea431c43784f54a005e48cb934c9e1?sid=702aa20f-1ed6-4ca3-9575-98ab2e91a617]
 
 📂 Deployment
 The application is deployed live at:
-Live Demo (Provide the live deployment link here)
+Live Demo (Provide the live deployment link here)[assigement2.vercel.app/]
 
 📘 Documentation
 API Specification: Described in the API Endpoints section.
