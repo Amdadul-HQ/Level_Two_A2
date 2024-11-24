@@ -1,8 +1,6 @@
 import { Request, Response } from 'express';
 import { orderSchema } from './order.validation';
 import { OrderServices } from './order.service';
-import { Product } from '../product/product.model';
-import { IProduct } from '../product/product.interface';
 import { ProductServices } from '../product/product.service';
 
 const createOrder = async (req: Request, res: Response) => {
@@ -10,8 +8,9 @@ const createOrder = async (req: Request, res: Response) => {
     const order = req.body;
     
     const {quantity,product} = order
-    
-    const productData : IProduct | null = await Product.findById(product);
+
+    const productData = await ProductServices.getSingleProductFromDB(product)
+
     
     if(!productData){
       return res.send({
@@ -40,7 +39,6 @@ const createOrder = async (req: Request, res: Response) => {
     const result = await OrderServices.orderCreateIntoDB(zodValidateData);
 
     await ProductServices.updateProductIntoDB(product,{...productData})
-    // await Product.findByIdAndUpdate(product,{...productData})
 
     res.status(201).json({
       message: "Order created successfully",
