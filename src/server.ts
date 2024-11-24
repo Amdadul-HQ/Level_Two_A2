@@ -12,8 +12,9 @@ async function main() {
     console.log(`Example app listening on port ${config.port}`);
   });
   }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   catch(error:any){
-    throw Error(error.message)
+    throw Error(error.message as string)
   }
 }
 
