@@ -191,10 +191,6 @@ npm run start:dev
 Use tools like Postman or cURL to test the endpoints.
 Alternatively, integrate the project with Swagger for API documentation.
 
-📹 Video Explanation
-Watch Video Explanation
-(Provide the link to your video explanation here)[https://www.loom.com/share/bdea431c43784f54a005e48cb934c9e1?sid=702aa20f-1ed6-4ca3-9575-98ab2e91a617]
-
 📂 Deployment
 The application is deployed live at:
 Live Demo (Provide the live deployment link here)[assigement2.vercel.app/]
