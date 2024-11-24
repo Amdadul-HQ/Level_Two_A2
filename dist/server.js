@@ -23,6 +23,7 @@ function main() {
                 console.log(`Example app listening on port ${config_1.default.port}`);
             });
         }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         catch (error) {
             throw Error(error.message);
         }
