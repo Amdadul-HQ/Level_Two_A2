@@ -2,7 +2,7 @@ import { IProduct } from "./product.interface";
 import { Product } from "./product.model";
 
 const productCreateIntoDB = async (product: IProduct)=>{
-    const result = await Product.create(product);
+    const result = (await Product.create(product)).toObject();
     return result;
 }
 
@@ -25,7 +25,7 @@ const getAllProductFromDB = async (searchTerm : string) => {
 const getSingleProductFromDB = async(id:string) =>{
     const result = await Product.findById(id);
     if(result){
-      return true
+      return result
     }
     return false;
 }
@@ -44,7 +44,13 @@ const updateProductIntoDB = async(id:string,data:IProduct)=>{
 
 // Delete Singel Product
 const deleteProductFromDB = async(id:string) =>{
-    const result = await Product.findByIdAndDelete(id);
+  
+  const isProductExist = await Product.findById(id);
+  if (!isProductExist) {
+    return false;
+  }
+  const result = await Product.findByIdAndDelete(id);
+
     return result;
 }
 
