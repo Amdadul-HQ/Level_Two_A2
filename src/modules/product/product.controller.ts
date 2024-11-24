@@ -9,7 +9,7 @@ const createProduct = async (req:Request,res:Response,) =>{
       const zodValidateData = productZodSchema.parse(product);
       
       const result = await ProductServices.productCreateIntoDB(zodValidateData);
-      
+
       res.status(201).json({
           message: 'Bicycle created successfully',
           success: true,
@@ -52,7 +52,7 @@ const getSingleProduct = async(req:Request,res:Response) => {
     const result = await ProductServices.getSingleProductFromDB(productId);
 
     if(!result){
-      return res.send({
+      res.send({
         message:"Bicycle Not Founded",
         status:false,
       })
@@ -77,13 +77,14 @@ const updateProduct = async (req: Request, res: Response) => {
   try {
     const { productId } = req.params;
     const updateData = req.body;
+    
 
     const result = await ProductServices.updateProductIntoDB(
       productId,
       updateData,);
 
     if (!result) {
-        return res.status(404).send({
+        res.status(404).send({
         message: 'Bicycle not founded',
         status: false,
       });
@@ -111,7 +112,7 @@ const deleteProduct = async (req:Request,res:Response) =>{
     const result = await ProductServices.deleteProductFromDB(productId);
 
    if (!result) {
-     return res.status(404).send({
+      res.status(404).send({
        message: 'Bicycle not founded',
        status: false,
      });

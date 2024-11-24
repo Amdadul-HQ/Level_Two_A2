@@ -13,38 +13,39 @@ const createOrder = async (req: Request, res: Response) => {
 
     
     if(!productData){
-      return res.send({
+        res.send({
         message: 'Product Not Founded',
         status: false,
       });
     }
-    
-    if(productData.quantity < quantity){
-      return res.send({
-        message: 'Insufficient Stock',
-        status: false,
+    else{
+      if (productData.quantity < quantity) {
+          res.send({
+          message: 'Insufficient Stock',
+          status: false,
+        });
+      }
+
+      productData.quantity -= quantity;
+
+      if (productData.quantity === 0) {
+        productData.inStock = false;
+      }
+
+      const totalPrice = productData.price * quantity;
+
+      const zodValidateData = orderSchema.parse({ ...order, totalPrice });
+
+      const result = await OrderServices.orderCreateIntoDB(zodValidateData);
+
+      await ProductServices.updateProductIntoDB(product, { ...productData });
+
+      res.status(201).json({
+        message: 'Order created successfully',
+        status: true,
+        data: result,
       });
     }
-
-    productData.quantity -= quantity;
-    
-    if(productData.quantity === 0){
-        productData.inStock = false
-    }
-    
-    const totalPrice = productData.price * quantity;
-    
-    const zodValidateData = orderSchema.parse({...order,totalPrice});
-
-    const result = await OrderServices.orderCreateIntoDB(zodValidateData);
-
-    await ProductServices.updateProductIntoDB(product,{...productData})
-
-    res.status(201).json({
-      message: "Order created successfully",
-      status: true,
-      data: result,
-    });
   } catch (error: unknown) {
    res.status(401).send({
      message: 'something went worng',
